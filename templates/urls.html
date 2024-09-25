@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Shortened URLs</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .dark-mode {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            padding: 15px;
+            transition: background-color 0.5s;
+        }
+
+        .dark-mode .navbar {
+            background-color: #0056b3;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            justify-content: center;
+            margin-right: 150px;
+        }
+
+
+        .navbar-nav .nav-item {
+            margin-left: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav {
+                flex-direction: column;
+                text-align: center;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .navbar-nav .nav-item {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .navbar-nav .nav-item:first-child {
+                margin-top: 0;
+            }
+        }
+
+        .content {
+            margin-top: 100px;
+        }
+
+        .container {
+            padding-top: 20px;
+        }
+
+        .table {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .table {
+            background-color: #4f4f4f;
+            color: #ffffff;
+            border-color: #6c757d;
+        }
+
+        .dark-mode .table-hover tbody tr:hover {
+            background-color: #6c757d;
+        }
+
+        .tabela {
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .dark-mode .tabela {
+            background-color: #0056b3;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-mode .btn-primary {
+            background-color: #0056b3;
+        }
+
+        .dark-mode .btn-primary:hover {
+            background-color: #003d7a;
+        }
+
+        .dark-mode .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .dark-mode .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .dark-mode .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: #ffffff;
+        }
+
+        .dark-mode .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: #ffcc00 !important;
+        }
+
+        /* Form inputs in dark mode */
+        .dark-mode input, .dark-mode select, .dark-mode textarea {
+            background-color: #4f4f4f;
+            color: #ffffff;
+            border-color: #6c757d;
+        }
+
+        .dark-mode input::placeholder, .dark-mode textarea::placeholder {
+            color: #d6d6d6;
+        }
+
+        .dark-mode input:focus, .dark-mode select:focus, .dark-mode textarea:focus {
+            background-color: #6c757d;
+            border-color: #8a8a8a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">URL Shortener</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('show_urls') }}">Show All URLs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('charts') }}">View Analytics</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <span class="material-icons theme-toggle" onclick="toggleTheme()">brightness_6</span>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container content">
+        <h1 class="text-center mb-4">🔗 All Shortened URLs</h1>
+
+        <!-- Search bar for filtering URLs -->
+        <div class="form-group">
+            <input type="text" id="urlSearch" class="form-control" placeholder="Search for URLs..." onkeyup="filterURLs()">
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover mt-4" id="urlTable">
+                <thead class="tabela">
+                    <tr>
+                        <th scope="col">Original URL</th>
+                        <th scope="col">Shortened URL</th>
+                        <th scope="col">Clicks</th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Last Click</th>
+                        <th scope="col">Last Click IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for url in urls %}
+                    <tr>
+                        <td class="text-truncate">{{ url.original_url }}</td>
+                        <td class="text-truncate"><a href="{{ url.short_code }}" target="_blank">{{ url.short_code }}</a></td>
+                        <td>{{ url.click_count }}</td>
+                        <td>{{ url.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ url.last_click_at.strftime('%Y-%m-%d %H:%M:%S') if url.last_click_at else 'Never' }}</td>
+                        <td>{{ url.last_click_ip if url.last_click_ip else 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg">Back to Home</a>
+            <a href="{{ url_for('charts') }}" class="btn btn-info btn-lg">View Analytics</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Filter URLs based on search input
+        function filterURLs() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("urlSearch");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("urlTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) { // Start from 1 to skip header row
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Auto-refresh the page every 15 seconds
+        setInterval(function() {
+            location.reload();
+        }, 15000); // 15000 milliseconds = 15 seconds
+    </script>
+</body>
+</html>
